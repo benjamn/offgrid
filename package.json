@@ -1,6 +1,6 @@
 {
   "name": "offgrid",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Art project using the Raspberry Pi camera module and Total Control Lighting LEDs",
   "author": {
     "name": "Ben Newman",
