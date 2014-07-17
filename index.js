@@ -7,7 +7,7 @@ var delaySecs = 5;
 var ledCount = 100;
 var stride = 5;
 var threshold = 120*3;
-var margin = 300;
+var margin = 100;
 var original = {};
 var positions = [];
 
@@ -45,25 +45,29 @@ function avgPt() {
     var count = 0;
     var xSum = 0;
     var ySum = 0;
+    var denominator = 0;
 
     camera.capture(function(image, w, h) {
         for (var x = stride; x < w; x += stride) {
             for (var y = stride; y < h; y += stride) {
                 var xySum = sum(image(x, y));
-                if (xySum > threshold && xySum > original[x + "," + y] + margin) {
+                var origSum = original[x + "," + y];
+                var diff = xySum - origSum;
+                if (xySum > threshold && diff > margin) {
+                    xSum += diff * x;
+                    ySum += diff * y;
+                    denominator += diff;
                     ++count;
-                    xSum += x;
-                    ySum += y;
                 }
             }
         }
     });
 
-    console.log(count, xSum, ySum);
+    console.log(count, xSum, ySum, denominator);
 
     return (count > 5) && [
-        Math.round(xSum / count),
-        Math.round(ySum / count)
+        Math.round(xSum / denominator),
+        Math.round(ySum / denominator)
     ];
 }
 
