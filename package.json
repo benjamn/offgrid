@@ -34,6 +34,10 @@
     "offgrid-lights": "~0.0.1",
     "offgrid-camera": "~0.0.1"
   },
+  "scripts": {
+    "install": "node-gyp --debug rebuild"
+  },
+  "gypfile": true,
   "engines": {
     "node": ">= 0.8.0"
   }
