@@ -1,4 +1,5 @@
 #include "offgrid-lights.h"
+#include <node.h>
 #include <v8.h>
 
 void init(v8::Local<v8::Object> exports) {
