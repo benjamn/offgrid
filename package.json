@@ -30,12 +30,8 @@
   "bugs": {
     "url": "https://github.com/benjamn/offgrid/issues"
   },
-  "dependencies": {
-    "offgrid-lights": "~0.0.1",
-    "offgrid-camera": "~0.0.1"
-  },
   "scripts": {
-    "install": "node-gyp --debug rebuild"
+    "install": "node-gyp rebuild"
   },
   "gypfile": true,
   "engines": {

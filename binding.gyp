@@ -3,7 +3,8 @@
     "target_name": "offgrid",
     "sources": [
       "elinux-tcl/tclled.cc",
-      "offgrid-lights.cc"
+      "offgrid-lights.cc",
+      "offgrid.cc"
     ],
     "defines": ['SPIFILE="/dev/spidev0.0"'],
     "include_dirs": [
