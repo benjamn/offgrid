@@ -16,25 +16,28 @@
 
 void write_frame(tcl_color *p, uint8_t flag, uint8_t red, uint8_t green, uint8_t blue);
 uint8_t make_flag(uint8_t red, uint8_t greem, uint8_t blue);
-ssize_t write_all(int filedes, const void *buf, size_t size);
+ssize_t write_all(int filedes, const tcl_color *buf, size_t size);
 
 static uint8_t gamma_table_red[256];
 static uint8_t gamma_table_green[256];
 static uint8_t gamma_table_blue[256];
 
 int tcl_init(tcl_buffer *buf, int leds) {
+  int padding = 10;
   buf->leds = leds;
-  buf->size = (leds+3)*sizeof(tcl_color);
+  buf->size = (1 + leds + padding) * sizeof(tcl_color);
   buf->buffer = (tcl_color*)malloc(buf->size);
   if(buf->buffer==NULL) {
     return -1;
   }
 
-  buf->pixels = buf->buffer+1;
+  buf->pixels = buf->buffer + 1;
 
-  write_frame(buf->buffer,0x00,0x00,0x00,0x00);
-  write_frame(buf->pixels+leds,0x00,0x00,0x00,0x00);
-  write_frame(buf->pixels+leds+1,0x00,0x00,0x00,0x00);
+  write_frame(buf->buffer, 0, 0, 0, 0);
+
+  for (int i = 0; i < padding; ++i) {
+    write_frame(buf->pixels + leds + i, 0, 0, 0, 0);
+  }
 
   return 0;
 }
@@ -100,7 +103,7 @@ uint8_t make_flag(uint8_t red, uint8_t green, uint8_t blue) {
   return ~flag;
 }
 
-ssize_t write_all(int filedes, const void *buf, size_t size) {
+ssize_t write_all(int filedes, const tcl_color *buf, size_t size) {
   ssize_t buf_len = (ssize_t)size;
   size_t attempt = size;
   ssize_t result;
@@ -127,7 +130,7 @@ ssize_t write_all(int filedes, const void *buf, size_t size) {
 
 void set_gamma(double gamma_red, double gamma_green, double gamma_blue) {
   int i;
-  
+
   for(i=0;i<256;i++) {
     gamma_table_red[i] = (uint8_t)(pow(i/255.0,gamma_red)*255.0+0.5);
     gamma_table_green[i] = (uint8_t)(pow(i/255.0,gamma_green)*255.0+0.5);
