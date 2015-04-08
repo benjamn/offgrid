@@ -6,7 +6,6 @@
 #include <string.h>
 
 #include "offgrid-lights.h"
-#include "elinux-tcl/tclled.h"
 #include <node.h>
 #include <v8.h>
 
@@ -19,7 +18,8 @@ TCLData::TCLData(int count): ledCount(count) {
   deviceFD = open(device, O_WRONLY);
 
   if (deviceFD < 0) {
-    fprintf(stderr, "Error %d: %s\n", errno, strerror(errno));
+    fprintf(stderr, "Error %d opening %s: %s\n",
+            errno, device, strerror(errno));
     exit(1);
   }
 
