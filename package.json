@@ -36,5 +36,9 @@
   "gypfile": true,
   "engines": {
     "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "offgrid-camera": "^0.2.0",
+    "offgrid-lights": "^0.2.0"
   }
 }
