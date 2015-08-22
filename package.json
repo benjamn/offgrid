@@ -30,9 +30,6 @@
   "bugs": {
     "url": "https://github.com/benjamn/offgrid/issues"
   },
-  "scripts": {
-    "install": "node-gyp rebuild"
-  },
   "gypfile": true,
   "engines": {
     "node": ">= 0.8.0"
